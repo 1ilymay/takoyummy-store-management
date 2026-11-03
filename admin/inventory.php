@@ -113,7 +113,7 @@ $sizes = [];
 $addons = [];
 $sizeUsage = [];
 $addonUsage = [];
-$result = mysqli_query($conn, 'SELECT * FROM ingredient ORDER BY name');
+$result = mysqli_query($conn, 'SELECT * FROM ingredient GROUP BY name, unit ORDER BY name');
 while ($result && $row = mysqli_fetch_assoc($result)) {
     $ingredients[] = $row;
 }
