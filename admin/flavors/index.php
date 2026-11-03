@@ -96,7 +96,7 @@ if (isset($conn) && $conn) {
                     while ($row = mysqli_fetch_assoc($result)) {
                         $id = $row['flavor_id'];
 
-                        // get the sizes of this flavor
+                        
                         $sizes = mysqli_query($conn, "SELECT size_label, price FROM flavor_size WHERE flavor_id = $id ORDER BY price");
                     ?>
                         <tr>

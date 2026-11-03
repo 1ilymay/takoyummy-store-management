@@ -1,30 +1,29 @@
+
 <?php
 function mask_review_profanity(string $text): string
 {
-    $pattern = '/(?<![\p{L}\p{N}])(?:'
-    . 'f[u*@]+c?k+|fck|fuk|fuq|'
-    . 'sh[i1!]+t+|sht|'
-    . 'b[i1!]+tch|'
-    . 'asshole|bastard|damn|'
-    . 'p[u*@o]+t[a@]+|'
-    . 'p[u*@o]+t[a@]+ng[\s._-]*[i1!]+n[a@]+|'
-    . 't[a@]+ng[\s._-]*[i1!]+n[a@]+|'
-    . 'tang[\s._-]*ina|'
-    . 'p[u*@]+ch[a@]+|punyeta|'
-    . 'g[a@]+g[o0@]+|g[a@]+g[a@]+|'
-    . 'b[o0]+b[o0]+|'
-    . 't[a@]+ng[a@]+|'
-    . '[u]+l[o0u]+l|'
-    . 'tarantad[o0a@]+|'
-    . 'k[u]+p[a@]+l|'
-    . 'p[a@]+ky[u]+|p[a@]+kshet|'
-    . 'bw[i1!]+s[i1!]+t|buwisit|'
-    . 'lech[e3]+|letse|lintik|'
-    . 'hinayupak|hay[o0]+p|hayup|ogag|'
-    . ')(?![\p{L}\p{N}])/iu';
-    $filtered = preg_replace($pattern, '****', $text);
-    if ($filtered === null) {
-        throw new RuntimeException('Review text could not be processed.');
+    $badWords = [
+            'gaga', 'gage', 'gagi', 'gago', 'gagu', 'g4go','g4g0', 'gag0', 'g@go','g@gu', 'g@g0', 
+            'putangina', 'potangena', 'putangena', 'potangina','putang1na', 'pota', 'p0ta', 'pucha',
+            'tangena', 't@ngina', 'tang1na', 'tngina',
+            'tanga','t4nga', 'tang4', 't@nga',
+            'bobo','b0bo', 'bob0', 'b0b0','bubu',
+            'fuck','fck', 'fuk', 'f*ck', 'f4ck', 'fvck',
+            'shit','shet','sh1t' ,'sh!t', 'sht',
+            'b1tch', 'b!tch', 'biatch','bitchesa','bitch',
+            'pakyou', 'pak u', 'fakyu', 'pakyow','pakyu',
+            'bwesit', 'bwset', 'bwis3t', 'bwct'
+                ];
+
+    foreach ($badWords as $word) {
+        $pattern = '/(?<![\p{L}\p{N}])'. preg_quote($word, '/'). '(?![\p{L}\p{N}])/iu';
+
+        $text = preg_replace_callback(
+            $pattern,
+            fn($match) => str_repeat('*', mb_strlen($match[0])),
+            $text
+        );
     }
-    return $filtered;
+
+    return $text;
 }

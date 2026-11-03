@@ -15,7 +15,7 @@ if (!isset($conn) || !$conn) {
 
 $flavorId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-// get the flavor
+
 $result = mysqli_query($conn, "SELECT flavor_id, name FROM flavor WHERE flavor_id = $flavorId");
 $flavor = mysqli_fetch_assoc($result);
 

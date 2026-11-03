@@ -26,7 +26,7 @@ if ($action == "add") {
         $qty = 99;
     }
 
-    // make sure the size and its flavor are still available
+ 
     $sizeStmt = mysqli_prepare($conn, "SELECT fs.size_id FROM flavor_size fs
             INNER JOIN flavor f ON f.flavor_id = fs.flavor_id
             WHERE fs.size_id = ? AND fs.is_available = 1 AND f.is_available = 1");
@@ -45,7 +45,7 @@ if ($action == "add") {
         $_SESSION['message'] = "Sorry, that item is currently sold out.";
         $_SESSION['msg_type'] = "danger";
     } else {
-        // selected add-ons
+       
         $addons = array();
         if (isset($_POST['addons'])) {
             if (!is_array($_POST['addons'])) {
@@ -91,7 +91,7 @@ if ($action == "add") {
             mysqli_stmt_close($addonCheck);
         }
 
-        // same size + same add-ons = same line in the cart
+      
         $key = $sizeId . "-" . implode("-", $addons);
         $previousLine = $_SESSION['cart'][$key] ?? null;
 
@@ -158,7 +158,7 @@ if ($action == "remove") {
     unset($_SESSION['cart'][$key]);
 }
 
-// Order type: delivery or pickup.
+
 if ($action == "set_type") {
     $type = $_POST['order_type'] ?? '';
     if ($type == "delivery" || $type == "pickup" || $type == "dine-in") {
